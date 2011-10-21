@@ -44,23 +44,23 @@ object Rational {
   def apply(n: Int): Rational = Rational(BigInt(n), BigInt(1))
   def apply(n: Long, d: Long): Rational = Rational(BigInt(n), BigInt(d))
   def apply(n: Long): Rational = Rational(n, 1L)
-	def apply(x: BigDecimal): Rational = Rational(new BigInt(x.bigDecimal.unscaledValue), BigInt(10) pow x.scale)
-	def apply(x: Double): Rational = Rational(BigDecimal(x))
-	def apply(x: Float): Rational = Rational(BigDecimal(x))
+  def apply(x: BigDecimal): Rational = Rational(new BigInt(x.bigDecimal.unscaledValue), BigInt(10) pow x.scale)
+  def apply(x: Double): Rational = Rational(BigDecimal(x))
+  def apply(x: Float): Rational = Rational(BigDecimal(x))
   def apply(r: String): Rational = r match {
     case RationalString(n, d) => Rational(BigInt(n), BigInt(d))
     case IntegerString(n) => Rational(BigInt(n))
     case x => try {
-			Rational(BigDecimal(x))
-		} catch {
-			case nfe: NumberFormatException => throw new NumberFormatException("For input string: " + r)
-		}
+      Rational(BigDecimal(x))
+    } catch {
+      case nfe: NumberFormatException => throw new NumberFormatException("For input string: " + r)
+    }
   }
 
-	/**
-	 * An extractor for the numerator and denominator.
-	 */
-	def unapply(r: Rational): Option[(BigInt,BigInt)] = Some((r.numerator, r.denominator))
+  /**
+   * An extractor for the numerator and denominator.
+   */
+  def unapply(r: Rational): Option[(BigInt,BigInt)] = Some((r.numerator, r.denominator))
 
     
   /**
@@ -77,48 +77,48 @@ object Rational {
   }
 
 
-	trait RationalIsConflicted extends Numeric[Rational] {
-		def plus(x: Rational, y: Rational): Rational = x + y
-		def minus(x: Rational, y: Rational): Rational = x - y
-		def times(x: Rational, y: Rational): Rational = x * y
-		def negate(x: Rational): Rational = -x
-		def fromInt(x: Int): Rational = Rational(x, 1)
-		def toInt(x: Rational): Int = toBigInt(x).toInt
-		def toLong(x: Rational): Long = toBigInt(x).toInt
-		def toFloat(x: Rational): Float = toDouble(x).toFloat
-		def toDouble(x: Rational): Double = x.n.toDouble / x.d.toDouble
+  trait RationalIsConflicted extends Numeric[Rational] {
+    def plus(x: Rational, y: Rational): Rational = x + y
+    def minus(x: Rational, y: Rational): Rational = x - y
+    def times(x: Rational, y: Rational): Rational = x * y
+    def negate(x: Rational): Rational = -x
+    def fromInt(x: Int): Rational = Rational(x, 1)
+    def toInt(x: Rational): Int = toBigInt(x).toInt
+    def toLong(x: Rational): Long = toBigInt(x).toInt
+    def toFloat(x: Rational): Float = toDouble(x).toFloat
+    def toDouble(x: Rational): Double = x.n.toDouble / x.d.toDouble
     def toBigInt(x: Rational): BigInt = x.numerator / x.denominator
-	}
-	trait RationalIsFractional extends RationalIsConflicted with Fractional[Rational] {
-		def div(x: Rational, y: Rational): Rational = x / y
-	}
-	trait RationalAsIfIntegral extends RationalIsConflicted with Integral[Rational] {
-		def quot(x: Rational, y: Rational): Rational = x / y
-		def rem(x: Rational, y: Rational): Rational = {
-			val q = x / y
-			q - q.toBigInt
-		}
-	}
-	implicit object RationalIsFractional extends RationalIsFractional with Ordering[Rational] {
-		def compare(x: Rational, y: Rational) = (x - y).n.signum
-	}
+  }
+  trait RationalIsFractional extends RationalIsConflicted with Fractional[Rational] {
+    def div(x: Rational, y: Rational): Rational = x / y
+  }
+  trait RationalAsIfIntegral extends RationalIsConflicted with Integral[Rational] {
+    def quot(x: Rational, y: Rational): Rational = x / y
+    def rem(x: Rational, y: Rational): Rational = {
+      val q = x / y
+      q - q.toBigInt
+    }
+  }
+  implicit object RationalIsFractional extends RationalIsFractional with Ordering[Rational] {
+    def compare(x: Rational, y: Rational) = (x - y).n.signum
+  }
 
 
   implicit def bigInt2Rational(x: BigInt): Rational = Rational(x, BigInt(1))
   implicit def int2Rational(x: Int): Rational = Rational(x)
-	implicit def long2Rational(x: Long): Rational = Rational(x)
-	implicit def bigDecimal2Rational(x: BigDecimal) = Rational(x)
-	implicit def double2Rational(x: Double) = Rational(x)
-	implicit def float2Rational(x: Float) = Rational(x)
+  implicit def long2Rational(x: Long): Rational = Rational(x)
+  implicit def bigDecimal2Rational(x: BigDecimal) = Rational(x)
+  implicit def double2Rational(x: Double) = Rational(x)
+  implicit def float2Rational(x: Float) = Rational(x)
 
-	object Range {
-		implicit object RationalAsIfIntegral extends RationalAsIfIntegral with Ordering[Rational] {
-			def compare(x: Rational, y: Rational) = (x - y).n.signum
-		}
+  object Range {
+    implicit object RationalAsIfIntegral extends RationalAsIfIntegral with Ordering[Rational] {
+      def compare(x: Rational, y: Rational) = (x - y).n.signum
+    }
 
-		def apply(start: Rational, end: Rational, step: Rational) = NumericRange(start, end, step)
-		def inclusive(start: Rational, end: Rational, step: Rational) = NumericRange.inclusive(start, end, step)
-	}
+    def apply(start: Rational, end: Rational, step: Rational) = NumericRange(start, end, step)
+    def inclusive(start: Rational, end: Rational, step: Rational) = NumericRange.inclusive(start, end, step)
+  }
 }
 
 
@@ -306,9 +306,9 @@ class Rational private (val n: BigInt, val d: BigInt) extends ScalaNumber with S
     case that => unifiedPrimitiveEquals(that)
   }
 
-	def canEqual(other: Any) = other.isInstanceOf[Rational]
+  def canEqual(other: Any) = other.isInstanceOf[Rational]
 
-	def until(end: Rational, step: Rational = Rational(1)) = Rational.Range(this, end, step)
-	def to(end: Rational, step: Rational = Rational(1)) = Rational.Range.inclusive(this, end, step)
+  def until(end: Rational, step: Rational = Rational(1)) = Rational.Range(this, end, step)
+  def to(end: Rational, step: Rational = Rational(1)) = Rational.Range.inclusive(this, end, step)
 }
 
