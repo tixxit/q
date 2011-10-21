@@ -15,8 +15,8 @@ import java.math.MathContext
  * @author Tom Switzer
  */
 object Rational {
-  private val zero = new Rational(0, 1)
-  private val one = new Rational(1, 1)
+  val zero = new Rational(0, 1)
+  val one = new Rational(1, 1)
 
   private val RationalString = """^(-?\d+)/(-?\d+)$"""r
   private val IntegerString = """^(-?\d+)$"""r
@@ -143,6 +143,7 @@ class Rational private (val n: BigInt, val d: BigInt) extends ScalaNumber with S
   def +(r: Rational): Rational = {
     var dgcd = d.gcd(r.d)
     if (dgcd == 1) {
+
       /* This case actually simplifies things greatly. If both "this" and
        * "r" are canonical and the denominators are coprime, then
        * n*r.d+r.n*d is co-prime with d * r.d and so (n*r.d+r.n*d)/(d*r.d)
@@ -161,6 +162,7 @@ class Rational private (val n: BigInt, val d: BigInt) extends ScalaNumber with S
        * As noted by Wikipedia's Coprime article, the probability of 2
        * random integers being coprime is ~71%; not too shabby.
        */
+
       new Rational(n * r.d + r.n * d, d * r.d)
     } else {
       val den = d / dgcd
