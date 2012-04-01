@@ -8,7 +8,7 @@ with Scala's other number types (`Int`, `Long`, `Double`, `Float`, `BigInt`,
 Use Spire.
 ----------
 
-This project has been superseded by [[https://github.com/non/spire Spire]],
+This project has been superseded by [Spire](https://github.com/non/spire),
 which contains `spire.math.Rational`, the evolution of this project's `Rational`
 number type. It also contains a bunch of other awesome goodies, like a full out
 `@specialized` numeric hierarcy for generic math and new number types, like
