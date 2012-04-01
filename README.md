@@ -5,6 +5,14 @@ This is an implementation of rational numbers in Scala that integrates well
 with Scala's other number types (`Int`, `Long`, `Double`, `Float`, `BigInt`, 
 `BigDecimal`, etc.).
 
+Use Spire.
+----------
+
+This project has been superseded by [[https://github.com/non/spire Spire]],
+which contains `spire.math.Rational`, the evolution of this project's `Rational`
+number type. It also contains a bunch of other awesome goodies, like a full out
+`@specialized` numeric hierarcy for generic math and new number types, like
+`Real`, `Complex`, and `Interval`.
 
 Why use it?
 -----------
